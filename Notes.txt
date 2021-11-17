@@ -1,3 +1,4 @@
+Chapter 1:
 Types:
 Strings use ""
 Use \ to escape (like \n for new line)
@@ -40,3 +41,50 @@ can declare and assign at same time and then don't need the type:
 var quantity = 20
 var length, width = 2.5, 4.5
 var name = "Steve"
+
+Using :=
+Short variable declaration
+quantity := 4
+name := "Steve"
+
+Variable name rules:
+
+name must begin with a letter
+Begins with a capital letter (than it has been exported)
+begins with a small letter (than it can only be used in that package)
+Need to use camelcase
+
+use int() to convert types to int
+
+Chapter 2: conditionals/loops
+Using methods
+replacer := strings.NewReplacer("#", "o")
+fixed := replacer.Replace(broken)
+
+Adding comments
+(use // for line comments)
+(use /* */ for multiline comments)
+
+Handling errors in Go
+input, err := reader.ReadString('\n')
+problem: what if we never use the err? (then we get a compile error)
+Option 1:
+Ignore the error:
+input, _ := reader.ReadString('\n')
+
+Option 2:
+Handle the error:
+input, err := reader.ReadString('\n')
+log.Fatal(err)  reports the error and stops the program
+
+Problem: some functions and methods return an error value of nil, so we'll get the error even if everything
+is okay. So we need to use a conditional.
+func main() {
+  fmt.Print("Enter a grade: ")
+  reader := bufio.NewReader(os.Stdin)
+  input, err :- reader.ReadString('\n')
+  if err != nil {
+      log.Fatal(err)
+  }
+  fmt.Println(input)
+}
