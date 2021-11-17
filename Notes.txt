@@ -1,0 +1,42 @@
+Types:
+Strings use ""
+Use \ to escape (like \n for new line)
+string
+zero value is empty string
+
+Runes:
+Used to represent single characters
+Use '' instead of ""
+Go uses unicode so just about any char from any language can be a rune
+
+Booleans:
+true false
+bool
+zero value is false
+
+Numbers:
+Integers and floats are treated differently
+int
+float64
+zero value is zero (not null)
+
+Operators are the same as in Python + -, etc
+
+Go is statically typed (checked before run time)
+to check for type, import "reflect" and use TypeOf()
+
+Variables:
+
+to declare: (it will give it a zero value this way)
+var quantity int
+var length, width float64
+var name string
+
+assignment is =
+You can assign multiple variables at the same time
+length, width = 2.5, 4.5
+
+can declare and assign at same time and then don't need the type:
+var quantity = 20
+var length, width = 2.5, 4.5
+var name = "Steve"
