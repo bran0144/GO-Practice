@@ -88,3 +88,29 @@ func main() {
   }
   fmt.Println(input)
 }
+
+Parsing and converting and checking for multiple errors:
+func main() {
+  fmt.Print("Enter a grade: ")
+  reader := bufio.NewReader(os.Stdin)
+  input, err :- reader.ReadString('\n')
+  if err != nil {
+        log.Fatal(err)
+  }
+  input = strings.TrimSpace(input)
+  grade, err := strconv.ParseFloat(input, 64)
+  if err != nil {
+    log.Fatal(err)
+  }
+  var status string
+  if grade >= 60 {
+    status = "passing"
+  }else {
+    status = "failing"
+  }
+  fmt.Println("A grade of", grade, "is", status)
+}
+
+Note:
+you can use the := declaration for err over again because go will just assign instead of declare for the
+second variable (as along as one of the two variables are different)
