@@ -114,3 +114,18 @@ func main() {
 Note:
 you can use the := declaration for err over again because go will just assign instead of declare for the
 second variable (as along as one of the two variables are different)
+
+Loops:
+for loops:
+for t:= 3; t >0; t-- {
+
+}
+Initializes t at 3, keeps looping while t is greater than 0, and decrements by 1
+++ for incrementing
++= add and assign (to increment or decrement by more than 1, i.e +=5)
+init and post statements are optional, but make sure it will eventually evaluate false
+x := 1
+for x <= 3 {
+  fmt.Println(x)
+  x++
+}
