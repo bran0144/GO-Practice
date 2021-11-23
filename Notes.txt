@@ -129,3 +129,22 @@ for x <= 3 {
   fmt.Println(x)
   x++
 }
+
+Chapter 3: Functions
+String formatting with Printf
+fmt.Printf("the %s cost %d cents each.\n", "gumballs", 23)
+Verbs
+%f - floating point #
+%d - decimal integer
+%s - string
+%t - boolean
+%v - value
+%T - type of supplied value
+%% - literal % sign
+
+To specify decimal places for floats:
+fmt.Printf("%%.2f: %.2f\n", 12.3456
+
+
+
+}
