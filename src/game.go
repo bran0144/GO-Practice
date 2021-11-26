@@ -5,8 +5,8 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"os"
 	"math/rand"
+	"os"
 	"strconv"
 	"strings"
 )
