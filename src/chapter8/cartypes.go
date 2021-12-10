@@ -1,15 +1,28 @@
 package chapter8
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type part struct {
 	description string
-	count int
+	count       int
 }
 
 type car struct {
-	name string
+	name     string
 	topSpeed float64
+}
+
+func showInfo(p part) {
+	fmt.Println("Description:", p.description)
+	fmt.Println("Count", p.count)
+}
+func minimumOrder(description string) part {
+	var p part
+	p.description = description
+	p.count = 100
+	return p
 }
 
 func main() {
@@ -22,6 +35,8 @@ func main() {
 	var bolts part
 	bolts.description = "Hex bolts"
 	bolts.count = 24
-	fmt.Println("Description:", bolts.description)
-	fmt.Println("Count", bolts.count)
+	showInfo(bolts)
+
+	p := minimumOrder("Hex bolts")
+	fmt.Println(p.description, p.count)
 }
