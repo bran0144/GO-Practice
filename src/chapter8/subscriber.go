@@ -8,18 +8,18 @@ type subscriber struct {
 	active bool
 }
 
-func printInfo(s subscriber) {
+func printInfo(s *subscriber) {
 	fmt.Println("Name:", s.name)
 	fmt.Println("Monthly rate:", s.rate)
 	fmt.Println("Active?", s.active)
 }
 
-func defaultSubscriber(name string) subscriber {
+func defaultSubscriber(name string) *subscriber {
 	var s subscriber
 	s.name = name
 	s.rate = 5.9
 	s.active = true
-	return s
+	return &s
 }
 
 func applyDiscount(s *subscriber) {
@@ -27,13 +27,13 @@ func applyDiscount(s *subscriber) {
 }
 
 func main() {
-	//subscriber1 := defaultSubscriber("Aman Signh")
-	//subscriber1.rate = 4.99
-	//printInfo(subscriber1)
-	//
-	//subscriber2 := defaultSubscriber("Max Ryan")
-	//printInfo(subscriber2)
-	var s subscriber
-	applyDiscount(&s)
-	fmt.Println(s.rate)
+	subscriber1 := defaultSubscriber("Aman Signh")
+	applyDiscount(subscriber1)
+	printInfo(subscriber1)
+
+	subscriber2 := defaultSubscriber("Max Ryan")
+	printInfo(subscriber2)
+	//var s subscriber
+	//applyDiscount(&s)
+	//fmt.Println(s.rate)
 }
