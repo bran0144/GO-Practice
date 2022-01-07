@@ -2,28 +2,30 @@ package chapter8
 
 import "fmt"
 
-type subscriber struct {
-	name   string
-	rate   float64
-	active bool
+type Subscriber struct {
+	Name   string
+	Rate   float64
+	Active bool
 }
 
-func printInfo(s *subscriber) {
-	fmt.Println("Name:", s.name)
-	fmt.Println("Monthly rate:", s.rate)
-	fmt.Println("Active?", s.active)
+//Using a struct literal instead
+//subscriber := magazine.Subscriber(Name: "John Smith", RateL 4.99, Active: true)
+func printInfo(s *Subscriber) {
+	fmt.Println("Name:", s.Name)
+	fmt.Println("Monthly rate:", s.Rate)
+	fmt.Println("Active?", s.Active)
 }
 
-func defaultSubscriber(name string) *subscriber {
-	var s subscriber
-	s.name = name
-	s.rate = 5.9
-	s.active = true
+func defaultSubscriber(name string) *Subscriber {
+	var s Subscriber
+	s.Name = name
+	s.Rate = 5.9
+	s.Active = true
 	return &s
 }
 
-func applyDiscount(s *subscriber) {
-	s.rate = 4.99
+func applyDiscount(s *Subscriber) {
+	s.Rate = 4.99
 }
 
 func main() {
