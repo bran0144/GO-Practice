@@ -37,7 +37,12 @@ func (c Coordinates) SetLongitude(longitude float64) error{
 
 func main() {
 	coordinates := Coordinates{}
-	err := coordinates.SetLatitude(37.42)
+	location := Landmark{}
+	err := location.SetName("The Googleplex")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = coordinates.SetLatitude(37.42)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,6 +50,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(coordinates.latitude)
-	fmt.Println(coordinates.longitude)
+	fmt.Println(location.name)
+	fmt.Println(location.latitude)
+	fmt.Println(location.longitude)
 }
