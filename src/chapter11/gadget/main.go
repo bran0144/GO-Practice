@@ -10,6 +10,14 @@ func playList(device Player, songs []string) {
 	}
 	device.Stop()
 }
+func TryOut(player Player) {
+	player.Play("test track")
+	player.Stop()
+	recorder, ok := player.(TapeRecorder)
+	if ok {
+		recorder.Record()
+	}
+}
 
 func main() {
 	mixtape := []string{"My way", "Nice and easy", "Someone to watch over me"}
@@ -17,4 +25,6 @@ func main() {
 	playList(player, mixtape)
 	player = TapeRecorder{}
 	playList(player, mixtape)
+	TryOut(TapeRecorder{})
+	TryOut(TapePlayer{})
 }

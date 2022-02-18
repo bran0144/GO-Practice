@@ -23,6 +23,9 @@ type Robot string
 func (r Robot) MakeSound() {
 	fmt.Println("Beep boop")
 }
+func (r Robot) Walk() {
+	fmt.Println("Powering legs")
+}
 
 func main() {
 	var toy NoiseMaker
@@ -32,5 +35,9 @@ func main() {
 	toy.MakeSound()
 	play(Whistle("Toyco Canary"))
 	play(Horn("Toyco Blaster"))
+	var noiseMaker NoiseMaker = Robot("Botco")
+	noiseMaker.MakeSound()
+	var robot Robot = noiseMaker.(Robot)
+	robot.Walk()
 }
 
