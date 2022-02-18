@@ -22,19 +22,19 @@ func GetFloats(fileName string) ([]float64, error) {
 	if err != nil {
 		return nil, err
 	}
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			number, err := strconv.ParseFloat(scanner.Text(), 64)
-			if err != nil {
-				return nil, err
-			}
-			numbers = append(numbers, number)
+	defer CloseFile(file)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		number, err := strconv.ParseFloat(scanner.Text(), 64)
+		if err != nil {
+			return nil, err
 		}
-		CloseFile(file)
-		if scanner.Err() != nil {
-			return nil, scanner.Err()
+		numbers = append(numbers, number)
 		}
-		return numbers, nil
+	if scanner.Err() != nil {
+		return nil, scanner.Err()
+	}
+	return numbers, nil
 }
 func main() {
 	numbers, err := GetFloats(os.Args[1])
