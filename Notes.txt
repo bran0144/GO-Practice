@@ -145,6 +145,381 @@ Verbs
 To specify decimal places for floats:
 fmt.Printf("%%.2f: %.2f\n", 12.3456
 
+Go is a pass by value language
+Which means that it copies the value into the function and does not alter the original
+Use &myInt  to get the Pointer
+*int  is a variable that holds pointers
+Pointer variables can only hold one type of variable
 
+Long declaration:
+var muInt int
+var myIntPointer *int
+myInterPointer = &myInt
 
+Short declaration:
+var myBool bool
+myBoolPointer := &myBool
+
+To get the value of the pointer, use *:
+fmt.Println(*myIntPointer)
+
+* Can be used to update the value at a pointer:
+myInt := 4
+myIntPointer := &myInt
+*MyIntPointer = 8
+(this changes both the value of myIntPointer and the original myInt)
+
+Pointers can be return types and arguments for functions too
+
+For functions to be public and available in other packages, they need to be capitalized
+
+Chapter 4: Packages
+package names should be all lowercase
+should be one word (no underscore, no camelcase)
+IF calling the function outside the package, need to use qualifiers:
+greeting.Hello()
+
+Constants -
+value must be assigned at declaration (and no :=)
+type can be omitted (and will be inferred from value)
+constants are usually declared at the package level (outside of functions)
+If it is capitalized, it can be exported
+const TriangleSides int = 3
+
+Comments -
+Package comments should begin with "Package" then package name and description
+Function comments should begin with the name of the function
+Should be full sentences
+godoc - generates HTML documentation based on the code in main go and workspace
+
+Chapter 5 - Lists/Arrays
+var myArray [4]string     4=# of elements, string=type of elements
+elements are zero indexed
+when created, all values are initialized to the zero value
+
+var notes [7]string
+notes[0] = "do"
+notes[1] = "re"
+
+array literal (initilized values)
+var primes [5]int = [5]int{2,3,5,7,11}
+
+short variable declaration
+notes := [7]string{"do", "re", "mi", "fa", "so", "la", "ti"}
+
+fmt.Println(notes) will print the elements as an array  [do re mi]
+fmt.Printf("%#v\n", notes)  will print the verb [3]string{"do", "re", "mi"}
+
+Can access elements through their indexes  notes[1]
+using for loops and indexes:
+for i := 0; i <= 2; i++ {
+    fmt.Println(i, notes[i])
 }
+Trying to access indexes out of range will throw a panic
+Can check array length with len(notes)
+use for..range for prevent panic
+for index, note := range notes {
+    fmt.Println(index, note)
+}
+If we don't need the index (can do similar if we only want index):
+for _, note := range notes {
+    fmt.Println(note)
+}
+
+Chapter 6 - Slices
+Arrays are fixed, they cannot be appended
+
+var mySlice []string
+leave [] empty for a slice
+slice is not automatically created, need to use make()
+
+notes = make([]string, 7)
+len, for, for...range all work the same as arrays
+Can also declare a slice literal
+nines := []int{9,18,27}
+
+Can slice into an array with this syntax:
+underlyingArray := [5]string{"A","B","C","D","E"}
+slice1 := underlyingArray[0:3]
+(slice syntax is just like Python)
+If the underlying array is changed, so is the slice
+Using make or slice literals means you don't have to work with the underlying array
+
+Append -
+slice = append(slice, "C") - will be appended to end of slice
+make sure to append back to the same slice
+A slice varialbe that no slice has been assigned to will be nil, not 0
+But, len will return 0 if it's passed a nil slice
+Language was written to tolerate nil
+
+Variadic functions -
+a function that can ben called with a varying number of arguments
+the last parameter receives the variadic arguments as a slice
+non-variadic arguments are always required
+func myFunc(param1 int, para2 ...string) {}
+
+Chapter 7 Maps
+var myMap map[string]float64
+string (key type)
+float64 (value type)
+need to use the make function to actually create the map
+
+var ranks map[string]int
+ranks = make(map[string]int)
+Or declare and make at same time:
+ranks := make(map[string]int)
+ranks["gold"] = 1
+ranks["silver"] = 2
+ranks["bronze"] = 3
+fmt.Println(ranks["bronze"])
+
+Using a map literal:
+myMap := map[string]float64{"a": 1.2, "b": 5.6}
+
+Creating an empty map:
+emptyMap := map[string]float64{}
+
+If you access a map key that hasn't been assigned yet, you get zero value back
+Zero value for a map variable is nil (if you declare a map, but don't assign it a value)
+
+To check if zero value is actually zero, or just not yet assigned, some will return an
+  additional Boolean value (many GO developers will call this variable "ok")
+  This is referred to as the "comma ok idiom"
+counters := map[string]int{"a": 3, "b": 0}
+var value int
+var ok bool
+value, ok = counters["a"]
+fmt.Println(value, ok)
+value, ok = counters["c"]
+fmt.Println(value, ok)
+_ , ok = counters["b"]
+
+Delete function (remove key value pairs)
+delete(ranks, "bronze")   - deletes the bronze key and its value from the map ranks
+Looping over a map:
+for name, grade := range grades {
+  fmt.Printf("%s has a grade of %0.1f%%\n", name, grade)
+}
+To only loop through keys:
+for name := range grades {
+  fmt.Println(name)
+}
+To only get the values:
+for _, grade := range grades {
+  fmt.Println(grade)
+}
+for range loop handles the map in random order
+
+To run in order, you need to put it in a sorted slice:
+var names []string
+for name := range grades {
+  names = append(names, name)
+}
+sort.Strings(names)
+for _, names := range names {
+  fmt.Printf("%s has a grade of %0.1f%%\n", name, grades[name])
+}
+
+Chapter 8 - Structs
+Slices and maps can hold values of only one type
+var myStruct struct {
+  number float64
+  word   string
+  toggle bool
+}
+running go fmt will correctly format so that they line up
+Use . operator to assign values and retrieve them
+myStruct.number = 3.14
+fmt.Println(myStruct.number)
+
+to create a type (to prevent having to create a new one for every struct)
+type part struct {
+  description string
+  count int
+}
+Typically you create a type outside a function so that it can be used outside
+types can be used for variables, but also for functions
+
+Because of pass by value, structs work like other arguments and the original is not changed
+Need to use & * notation
+To print the value at a pointer, you need to use *notation:
+var value int = 2
+var pointer *int = &value
+fmt.Println(*pointer)
+
+But this works differently in structs:
+var value myStruct
+value.myField = 3
+var pointer *myStruct = &value
+fmt.Println((*pointer).myField)   (gets the struct value at the pointer, then access the struct field)
+
+or you can just use:
+fmt.Println(pointer.myField)
+
+and can be used to assign field as well:
+pointer.myField=9
+
+Function parameters receive a copy of the arguments from the function call, which is why it's often
+better to pass functions a pointer to a struct (rather than the struct itself)
+This way, only one copy of the original struct exists in memory (and only it will be modified)
+
+Structs work like variables, that you need to pass by value (functions receive a copy of the argument)
+If a function changes a parameter value, it's changing the copy, not the original
+You can use pointers to update a struct
+However, to access the value at a pointer with a struct the syntax is a little different (use . operator)
+func main() {
+  var value myStruct
+  value.myField = 3
+  var pointer *myStruct = &value
+  (so this doesn't work) fmt.Println(*pointer.myField)
+  (this does) fmt.Println(pointer.myField)
+}
+
+To save memory, it is usually a good idea to pass the pointer to a struct rather than the struct itself
+
+Anonymous Structs
+
+Makes accessing inner structs easier
+if the struct is named you have to do this:
+subscriber.HomeAddress.Street = "123 Oak St"
+
+but anonymous structs are just a type, no name
+to declare:
+type Subscriber struct{
+  Name string
+  Rate float64
+  Active bool
+  Address     (field is not named)
+}
+
+so now its:
+subscriber.Address.Street = "123 Oak St"
+
+An inner struct within an outer struct using an anonymous field is said to be embedded within the outer
+Fields for an embedded struct are "promoted" to the outer struct, meaning you can access them if they
+  belong to the outer struct
+So then you only have to write:
+subscriber.Street = "123 Oak St"
+
+
+Types and Methods
+If you have a defined type, you cannot assign a value of a different defined type to it, even if it has
+  the same underlying type.
+Defined Types and operators
+Supports all the same operations as its underlying type
+Defined types can be used in operations together with literal values
+fmt.Println(Liters(1.2) + 3.4)
+BUT, cannot be used in operations together with values of a different type, even if underlying type
+  is the same
+We will get a compile error if we try to combine values of different types
+we need to convert the types to match first
+
+GO does not support overloading (having a variety of methods with the same name but different signatures)
+
+Method syntax
+func (m MyType) sayHi() {
+  fmt.Println("Hi from", m)
+}
+receiver - the value you are calling the method on
+receiver listed first when you're calling a method
+receiver parameter is listed first when you're defining a method
+m - receiver parameter name
+MyType - receiver parameter type
+
+value := MyType('a MyType value')
+value.sayHi()
+value - method received
+sayHi - method name
+
+Receiver parameter is pretty much just another parameter
+Typically, receiver parameters are a single letter (like m) of the type
+GO uses receiver parameters instead of "self" or "this" (go is more explicit)
+
+Can only define new methods on types that are defined in the same package
+Should use structs if you need to embed another package's type as an anonymous field
+
+Methods are like functions, but they are called on a receiver
+any additional parameters are after method name
+func (m Mytype) MethodWithParameters(number int, flag bool) {
+  fmt.Println(m)
+  fmt.Println(number)
+  fmt.Println(flag)
+}
+func main() {
+  value.MethodWithParameters(4, true)
+}
+
+you can also declare one or more return values
+
+func (m Mytype) WithReturn() int{
+  return len(m)
+}
+Methods can be exported if they start with capital letter (ExportedMethod)
+or not if they don't (unexportedMethod)
+
+Can call a method using both direct values and pointers because Go will autoconvert if needed
+BUT, you should avoid mixing the too (either use all value receivers or pointer receivers)
+&MyType("value") - won't work - you can only get pointers to values that are stored in variables
+Same limitation when calling methods with pointer receivers
+Go can automatically convert values to pointers, but only if the receiver value is stored in a variable
+
+This works:
+value := MyType("a value")
+value.pointerMethod()
+
+Chapter 10
+Exported methods get promoted just like fields (and help with encapsulation)
+type MyType struct{
+  EmbeddedType
+}
+type Embedded string
+func (e EmbeddedType) ExportedMethod() {
+}
+func (e EmbeddedType) unexportedMethod() {}
+
+In Go, data is encapsulated within packages, using unexported package variables or struct fields.
+Unexported variables, struct fields, functions, methods, and the like can still be accessed by exported
+  functions and methods defined in the same package.
+The practice of ensuring that data is valid before accepting it is known as data validation.
+A method that is primarily used to set the value of an encapsulated field is known as a setter method.
+  Setter methods often include validation logic, to ensure the new value being provided is valid.
+Since setter methods need to modify their receiver, their receiver parameter should have a pointer type.
+It’s conventional for setter method names to be in the form SetX where X is the name of the field being set.
+A method that is primarily used to get the value of an encapsulated field is known as a getter method.
+It’s conventional for getter method names to be in the form X where X is the name of the field being set.
+Some other programming languages favor the form GetX for getter method names, but you should not use
+  that form in Go.
+Methods defined on an outer struct type live alongside methods promoted from an embedded type.
+An embedded type’s unexported methods don’t get promoted to the outer type.
+
+Chapter 11
+Interfaces
+Give you a method for something when you don't care about type (car or boat, both need a steer method)
+Syntax:
+
+type myInterface interface {
+  methodWithoutParameters()
+  methodWithParameter(float64)
+  methodWithReturnValue() string
+}
+
+a type that has all the methods listed is said to satisfy that interface
+a type can satisfy multiple interfaces and an interface can and should have multiple types that satisfy it
+
+concrete types - specifies not only what its values can do (what methods you can call on them)
+  but also what they are (the underlying type that holds the value's data)
+Interface types don't describe what a value is (how the data is stored), they only describe the methods
+When you have a variable of interface type, the only methods we can call are the methods
+  defined in the interface
+Type assertion - when you have a variable of a concrete type assigned to a variable with an interface type,
+  a type assertion lets you get the concrete type back. (kind of like a type conversion)
+  Use .() to assert a type (var robot Robot = noiseMaker.(Robot)
+  then you can use robot methods on noiseMaker
+How to avoid panics when type assertions fail
+error is also an interface - a "predeclared identifier" like int or string
+fmt.Stringer - allows any type to decide how it will be displayed when printed - method needs to return a string
+
+Chapter 12 - handling errors and failure
+defer - runs no matter what
+can only use on function or method calls (not for loops or variable assignments)
+Recursive function calls (allows a function to call itself) - need to be careful of infinite loops
