@@ -527,4 +527,7 @@ Recursive function calls (allows a function to call itself) - need to be careful
 When a program panics, all function calls will still be made. They'll be made in the reverse order they were deferred in
 Should use error for inaccessible files, network failures, bad user input
 Should use panic for bugs in the program or "impossible" situations
+Go is not designed well for panics, intentionally
+They want people to use if return statements with error values
+
 
