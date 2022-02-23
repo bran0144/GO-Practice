@@ -523,3 +523,5 @@ Chapter 12 - handling errors and failure
 defer - runs no matter what
 can only use on function or method calls (not for loops or variable assignments)
 Recursive function calls (allows a function to call itself) - need to be careful of infinite loops
+
+When a program panics, all function calls will still be made. They'll be made in the reverse order they were deferred in
