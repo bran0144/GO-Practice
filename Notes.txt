@@ -525,3 +525,6 @@ can only use on function or method calls (not for loops or variable assignments)
 Recursive function calls (allows a function to call itself) - need to be careful of infinite loops
 
 When a program panics, all function calls will still be made. They'll be made in the reverse order they were deferred in
+Should use error for inaccessible files, network failures, bad user input
+Should use panic for bugs in the program or "impossible" situations
+
