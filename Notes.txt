@@ -530,4 +530,10 @@ Should use panic for bugs in the program or "impossible" situations
 Go is not designed well for panics, intentionally
 They want people to use if return statements with error values
 
+Chapter 13 - Goroutines and concurrency
+Goroutines allow for concurrency (pausing one task to work on others)
+Goroutines allow for parallelism (running tasks simultaneously)
+
+
+
 
