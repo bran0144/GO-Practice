@@ -534,7 +534,23 @@ Chapter 13 - Goroutines and concurrency
 Goroutines allow for concurrency (pausing one task to work on others)
 Goroutines allow for parallelism (running tasks simultaneously)
 Usually does not enforce order - makes no guarantees about when it will switch between Goroutines
+simply add go to the front of a statement you want to create a go routine for
 BUT, channels allow you to synchronize
+Go statements
+Can't use function return values in a go statement because you can't rely on the return values  
+  to be ready in time, so the go compiler blocks you from doing that
+Channels solves this problem - they ensure the sending goroutine has sent the value 
+  before the receiving go routine attempts to use it
+Channels - use chan keyword and must declare what type of values the channel with carry
+var myChannel chan float64
+myChannel = make(chan float64)
+or just do it together:
+myChannel := make(chan float64)
+need to use make to create the channel
+TO send a value:
+myChannel <- 3.14
+To receive values:
+<- myChannel
 
 
 
