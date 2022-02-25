@@ -5,15 +5,18 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
-	responseSize("https://example.com")
-	responseSize("https://golang.org")
-	responseSize("https://golang.org/doc")
+	go responseSize("https://example.com")
+	go responseSize("https://golang.org")
+	go responseSize("https://golang.org/doc")
+	time.Sleep(5 * time.Second)
 }
 
 func responseSize(url string) {
+	fmt.Println("Getting", url)
 	response, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)

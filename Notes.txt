@@ -533,7 +533,8 @@ They want people to use if return statements with error values
 Chapter 13 - Goroutines and concurrency
 Goroutines allow for concurrency (pausing one task to work on others)
 Goroutines allow for parallelism (running tasks simultaneously)
-
+Usually does not enforce order - makes no guarantees about when it will switch between Goroutines
+BUT, channels allow you to synchronize
 
 
 
