@@ -551,6 +551,6 @@ TO send a value:
 myChannel <- 3.14
 To receive values:
 <- myChannel
-
+Channels synchronize their actions and coordinate their timing
 
 
