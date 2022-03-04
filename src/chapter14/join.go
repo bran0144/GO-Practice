@@ -2,12 +2,15 @@ package chapter14
 
 import (
 	"fmt"
-	"github.com/headfirstgo/prose"
 	"strings"
+
+	"github.com/headfirstgo/prose"
 )
 
 func JoinWithCommas(phrases []string) string {
-	if len(phrases) == 1 {
+	if len(phrases) == 0 {
+		return ""
+	} else if len(phrases) == 1 {
 		return phrases[0]
 	} else if len(phrases) == 2 {
 		return phrases[0] + " and " + phrases[1]
